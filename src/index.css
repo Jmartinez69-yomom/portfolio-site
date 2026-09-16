@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* -- Color tokens: dark-photographic / machine-shop palette -- */
+  --color-graphite: #14171a;      /* base background */
+  --color-panel: #1c2024;         /* raised section / card background */
+  --color-panel-line: #2a2f34;    /* hairline borders on panels */
+  --color-ink: #ededed;           /* primary text */
+  --color-ink-muted: #9ca3af;     /* secondary text */
+  --color-amber: #e8863a;         /* primary accent — machine-shop warning amber */
+  --color-amber-dim: #a85f28;     /* amber for hover/dim states */
+  --color-blueprint: #5a86c9;     /* secondary accent — cool blueprint blue */
+
+  --font-display: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-graphite);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scroll-snap "block" scrolling container.
+   --nav-h accounts for the fixed navbar height so each block sits fully
+   below it instead of being partially covered. */
+:root {
+  --nav-h: 65px;
+}
+
+.snap-container {
+  margin-top: var(--nav-h);
+  height: calc(100vh - var(--nav-h));
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: calc(100vh - var(--nav-h));
+}
+
+/* Respect users who've asked for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .snap-container {
+    scroll-snap-type: none;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Visible keyboard focus ring, in the accent color, on every interactive element */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 3px;
+}
+
+::selection {
+  background-color: var(--color-amber);
+  color: var(--color-graphite);
+}
